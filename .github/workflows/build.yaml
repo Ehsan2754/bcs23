@@ -41,7 +41,7 @@ jobs:
         # directory: $ {{ env.SRC_DIR }}
         # file: ${{ env.SRC_FILE }}
 
-        options: -shell-escape -f
+        options: -shell-escape 
     - name: Prepare for publish
       run: |
         mkdir build

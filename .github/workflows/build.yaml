@@ -36,6 +36,7 @@ jobs:
       uses: lyuwen/build-latex-action@v1.0.1
       id: textbuild
       with:
+        directory: $ {{ env.SRC_DIR }}
         file: ${{ env.SRC_FILE }}
         options: -f
     - name: Prepare for publish

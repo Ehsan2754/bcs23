@@ -29,7 +29,7 @@ jobs:
       run: |
         mkdir ${{ env.BUILD_DIR }}
         cp ${{ steps.texbuild.outputs.output }} ./${{ env.BUILD_DIR }}/ThesisBcs23.pdf
-        cd public && bash ../prepare_for_publish.sh,
+        cd ./${{ env.BUILD_DIR }} && bash ../prepare_for_publish.sh,
     - uses: actions/upload-artifact@v2
       with:
         name: ${{ steps.texbuild.outputs.output }}

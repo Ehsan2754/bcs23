@@ -16,9 +16,6 @@ jobs:
       TARGET_FILE: thesis.pdf
 
     # steps:
-    # - name: Prepare for build
-    #   run: |
-    #     cd ${{ env.SRC_DIR }}
     
     #   - name: Set up Git repository
     #     uses: actions/checkout@v2
@@ -32,6 +29,9 @@ jobs:
     - name: Clone Repo
       uses: actions/checkout@v3
     
+    - name: Prepare for build
+      run: |
+        sudo apt install biber
     
     - name: Build LaTeX Document
       uses: lyuwen/build-latex-action@v1.0.1

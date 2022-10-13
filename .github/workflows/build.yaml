@@ -14,41 +14,55 @@ jobs:
       SRC_FILE: thesis.tex
       TARGET_DIR: build
       TARGET_FILE: thesis.pdf
-
-    # steps:
-    
-    #   - name: Set up Git repository
-    #     uses: actions/checkout@v2
-    #   - name: Compile LaTeX document
-    #     uses: dante-ev/latex-action@latest
-    #     with:
-    #       root_file: ${{ env.LATEX_DIR }}/${{ env.LATEX_FILE }}    
-      
+#   @V3
     steps:
-    
-    - name: Clone Repo
-      uses: actions/checkout@v3
-    
-    - name: Prepare for build
-      run: |
-        sudo apt install biber
-    
-    - name: Build LaTeX Document
-      uses: lyuwen/build-latex-action@v1.0.1
-      id: textbuild
-      with:
-        directory: ./literature
-        file: thesis.tex
-        # directory: $ {{ env.SRC_DIR }}
-        # file: ${{ env.SRC_FILE }}
+      - name: Set up Git repository
+        uses: actions/checkout@v2
+      - name: latex2pdf
+        id: compile-latex-document
+        uses: thomas-chauvet/latex2pdf-action@1.0.5
+        with:
+          output_dir: output
+          main_latex_file: ./literature/thesis.tex
+          ctan_packages: amsmath amsfonts lua-uni-algos
+      - name: Upload PDF to the workflow tab
+        id: upload-workflow-tab
+        uses: actions/upload-artifact@v2
+        with:
+          name: output
+          path: output/literature.pdf
+#   @V2
+#      steps:    
+#        - name: Set up Git repository
+#          uses: actions/checkout@v2
+#        - name: Compile LaTeX document
+#          uses: dante-ev/latex-action@latest
+#          with:
+#            root_file: ${{ env.LATEX_DIR }}/${{ env.LATEX_FILE }}    
 
-        options: -shell-escape -f --synctex=1 
-    - name: Prepare for publish
-      run: |
-        mkdir build
-        cp ${{ steps.texbuild.outputs.output }} ./build/thesis.pdf
-        cd ./build && bash ../prepare_for_publish.sh,
-    - uses: actions/upload-artifact@v2
-      with:
-        name: ${{ steps.texbuild.outputs.output }}
-        path: ${{ steps.texbuild.outputs.output }}
+
+#   @V1      
+#     steps:
+#     - name: Clone Repo
+#       uses: actions/checkout@v3
+#     - name: Prepare for build
+#       run: |
+#         sudo apt install biber
+#     - name: Build LaTeX Document
+#       uses: lyuwen/build-latex-action@v1.0.1
+#       id: textbuild
+#       with:
+#         directory: ./literature
+#         file: thesis.tex
+#         # directory: $ {{ env.SRC_DIR }}
+#         # file: ${{ env.SRC_FILE }}
+#         options: -shell-escape -f --synctex=1 
+#     - name: Prepare for publish
+#       run: |
+#         mkdir build
+#         cp ${{ steps.texbuild.outputs.output }} ./build/thesis.pdf
+#         cd ./build && bash ../prepare_for_publish.sh,
+#     - uses: actions/upload-artifact@v2
+#       with:
+#         name: ${{ steps.texbuild.outputs.output }}
+#         path: ${{ steps.texbuild.outputs.output }}

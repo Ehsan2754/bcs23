@@ -8,7 +8,7 @@ on:
 jobs:
   build:
     name: build LaTex
-    runs-on: ubuntu-18.04
+    runs-on: ubuntu-latest
     env:
       SRC_DIR: ./literature
       SRC_FILE: thesis.tex
@@ -27,7 +27,7 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: thesis.pdf
-          path: thesis.pdf
+          path: ./literature/thesis.pdf
       - name: Create Release
         id: create_release
         uses: actions/create-release@v1
@@ -46,7 +46,7 @@ jobs:
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }} 
           asset_path: thesis.pdf
-          asset_name: thesis.pdf
+          asset_name: ./literature/thesis.pdf
           asset_content_type: application/pdf
 #     - name: Clone Repo
 #       uses: actions/checkout@v3

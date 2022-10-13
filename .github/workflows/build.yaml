@@ -36,14 +36,17 @@ jobs:
       uses: lyuwen/build-latex-action@v1.0.1
       id: textbuild
       with:
-        directory: $ {{ env.SRC_DIR }}
-        file: ${{ env.SRC_FILE }}
+        directory: ./literature
+        file: thesis.tex
+        # directory: $ {{ env.SRC_DIR }}
+        # file: ${{ env.SRC_FILE }}
+
         options: -f
     - name: Prepare for publish
       run: |
-        mkdir ${{ env.TARGET_DIR }}
-        cp ${{ steps.texbuild.outputs.output }} ./${{ env.TARGET_DIR }}/{{ env.TARGET_FILE }}
-        cd ./${{ env.TARGET_DIR }} && bash ../prepare_for_publish.sh,
+        mkdir build
+        cp ${{ steps.texbuild.outputs.output }} ./build/thesis.pdf
+        cd ./build && bash ../prepare_for_publish.sh,
     - uses: actions/upload-artifact@v2
       with:
         name: ${{ steps.texbuild.outputs.output }}

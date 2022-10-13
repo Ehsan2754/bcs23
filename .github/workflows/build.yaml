@@ -7,7 +7,7 @@ on:
 
 jobs:
   build:
-    name: build LaTex
+    name: build LaTeX
     runs-on: ubuntu-latest
     env:
       SRC_DIR: ./literature
@@ -27,7 +27,7 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: ${{ env.TARGET }}
-          path: ${{ env.SRC_DIR }}/${{ env.SRC_DIR }}
+          path: ${{ env.SRC_DIR }}/${{ env.TARGET }}
       - name: Create Release
         id: create_release
         uses: actions/create-release@v1

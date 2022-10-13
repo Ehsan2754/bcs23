@@ -13,28 +13,62 @@ jobs:
       SRC_DIR: ./literature
       SRC_FILE: thesis.tex
       TARGET_DIR: build
-      TARGET_FILE: thesis.pdf
+      TARGET: thesis.pdf
     steps:
-    - name: Clone Repo
-      uses: actions/checkout@v3
+      - name: Set up Git repository
+        uses: actions/checkout@v2
+      - name: Prepare for Compile
+        run: |
+          cd ${{ env.SRC_DIR }}
+      - name: Compile LaTeX document
+        uses: xu-cheng/latex-action@v2
+        with:
+          root_file: thesis.tex
+      - name: Upload PDF as artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: thesis.pdf
+          path: thesis.pdf
+      - name: Create Release
+        id: create_release
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: v0.1-${{ github.run_number }}
+          release_name: Automated build v0.1-${{ github.run_number }}
+          draft: false
+          prerelease: false
+      - name: Upload Release Asset
+        id: upload-release-asset 
+        uses: actions/upload-release-asset@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          upload_url: ${{ steps.create_release.outputs.upload_url }} 
+          asset_path: thesis.pdf
+          asset_name: thesis.pdf
+          asset_content_type: application/pdf
+#     - name: Clone Repo
+#       uses: actions/checkout@v3
 #     - name: Prepare for build
 #       run: |
 #       sudo apt install biber
-    - name: Build LaTeX Document
-      uses: lyuwen/build-latex-action@v1.0.1
-      id: textbuild
-      with:
-        directory: ./literature
-        file: thesis.tex
-        options: -shell-escape -bibtex
-        # directory: $ {{ env.SRC_DIR }}
-        # file: ${{ env.SRC_FILE }}
-    - name: Prepare for publish
-      run: |
-        mkdir build
-        cp ${{ steps.texbuild.outputs.output }} ./build/thesis.pdf
-        cd ./build && bash ../prepare_for_publish.sh,
-    - uses: actions/upload-artifact@v2
-      with:
-        name: ${{ steps.texbuild.outputs.output }}
-        path: ${{ steps.texbuild.outputs.output }}
+#     - name: Build LaTeX Document
+#       uses: lyuwen/build-latex-action@v1.0.1
+#       id: textbuild
+#       with:
+#         directory: ./literature
+#         file: thesis.tex
+#         options: -shell-escape -bibtex
+#         # directory: $ {{ env.SRC_DIR }}
+#         # file: ${{ env.SRC_FILE }}
+#     - name: Prepare for publish
+#       run: |
+#         mkdir build
+#         cp ${{ steps.texbuild.outputs.output }} ./build/thesis.pdf
+#         cd ./build && bash ../prepare_for_publish.sh,
+#     - uses: actions/upload-artifact@v2
+#       with:
+#         name: ${{ steps.texbuild.outputs.output }}
+#         path: ${{ steps.texbuild.outputs.output }}

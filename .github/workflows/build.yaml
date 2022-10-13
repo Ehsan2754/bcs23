@@ -25,6 +25,7 @@ jobs:
         # Name of the file to build.
         file: ${{ env.LATEX_FILE }}
         directory: ${{ env.LATEX_DIR }}
+        options: -f
     - name: Prepare for publish
       run: |
         mkdir ${{ env.BUILD_DIR }}

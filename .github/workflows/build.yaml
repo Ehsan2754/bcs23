@@ -1,21 +1,36 @@
 name: build
 
-on: [workflow_dispatch,push]
+on:
+  push:
+  workflow_dispatch:
+    
 
 jobs:
-  name: build
-    runs-on: ubuntu-latest
+  build:
+    name: Build and Publish
+    runs-on: ubuntu-18.04
+    env:
+      LATEX_DIR: ./publication
+      LATEX_FILE: ./publication/thesis.tex
+      BUILD_DIR: build
+      
+      
     steps:
-      - name: Clone Repo
-        uses: actions/checkout@v3
-      - name: Build LaTeX Document
-        # You may pin to the exact commit or the version.
-        # uses: lyuwen/build-latex-action@2b0d798c169334fd2fe161fcaf48fcd24dc38c6c
-        uses: lyuwen/build-latex-action@v1.0.1
-        with:
-          # Name of the file to build.
-          file: # default is main.tex
-          # The directory to build from.
-          directory: # optional, default is .
-          # list of other options.
-          options: # optional, default is 
+    - name: Clone Repo
+      uses: actions/checkout@v3
+    - name: Build LaTeX Document
+      uses: lyuwen/build-latex-action@v1.0.1
+      id: textbuild
+      with:
+        # Name of the file to build.
+        file: ${{ env.LATEX_DIR }}
+        directory: LATEX_FILE
+    - name: Prepare for publish
+      run: |
+        mkdir ${{ env.BUILD_DIR }}
+        cp ${{ steps.texbuild.outputs.output }} ./${{ env.BUILD_DIR }}/ThesisBcs23.pdf
+        cd public && bash ../prepare_for_publish.sh,
+    - uses: actions/upload-artifact@v2
+      with:
+        name: ${{ steps.texbuild.outputs.output }}
+        path: ${{ steps.texbuild.outputs.output }}

@@ -19,7 +19,7 @@ jobs:
       uses: actions/checkout@v3
 #     - name: Prepare for build
 #       run: |
-        sudo apt install biber
+#       sudo apt install biber
     - name: Build LaTeX Document
       uses: lyuwen/build-latex-action@v1.0.1
       id: textbuild

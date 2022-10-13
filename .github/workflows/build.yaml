@@ -1,4 +1,4 @@
-name: build
+name: Build LaTeX document
 
 on:
   push:
@@ -7,31 +7,37 @@ on:
 
 jobs:
   build:
-    name: Build and Publish
+    name: build LaTex
     runs-on: ubuntu-18.04
     env:
       LATEX_DIR: ./publication
       LATEX_FILE: thesis.tex
       BUILD_DIR: build
-      
-      
     steps:
-    - name: Clone Repo
-      uses: actions/checkout@v3
-    - name: Build LaTeX Document
-      uses: lyuwen/build-latex-action@v1.0.1
-      id: textbuild
-      with:
-        # Name of the file to build.
-        file: ${{ env.LATEX_FILE }}
-        directory: ${{ env.LATEX_DIR }}
-        options: -f
-    - name: Prepare for publish
-      run: |
-        mkdir ${{ env.BUILD_DIR }}
-        cp ${{ steps.texbuild.outputs.output }} ./${{ env.BUILD_DIR }}/ThesisBcs23.pdf
-        cd ./${{ env.BUILD_DIR }} && bash ../prepare_for_publish.sh,
-    - uses: actions/upload-artifact@v2
-      with:
-        name: ${{ steps.texbuild.outputs.output }}
-        path: ${{ steps.texbuild.outputs.output }}
+      - name: Set up Git repository
+        uses: actions/checkout@v2
+      - name: Compile LaTeX document
+        uses: dante-ev/latex-action@latest
+        with:
+          root_file: ${{ env.LATEX_DIR }}/${{ env.LATEX_FILE }}    
+      
+    # steps:
+    # - name: Clone Repo
+    #   uses: actions/checkout@v3
+    # - name: Build LaTeX Document
+    #   uses: lyuwen/build-latex-action@v1.0.1
+    #   id: textbuild
+    #   with:
+    #     # Name of the file to build.
+    #     file: ${{ env.LATEX_FILE }}
+    #     directory: ${{ env.LATEX_DIR }}
+    #     options: -f
+    # - name: Prepare for publish
+    #   run: |
+    #     mkdir ${{ env.BUILD_DIR }}
+    #     cp ${{ steps.texbuild.outputs.output }} ./${{ env.BUILD_DIR }}/ThesisBcs23.pdf
+    #     cd ./${{ env.BUILD_DIR }} && bash ../prepare_for_publish.sh,
+    # - uses: actions/upload-artifact@v2
+    #   with:
+    #     name: ${{ steps.texbuild.outputs.output }}
+    #     path: ${{ steps.texbuild.outputs.output }}

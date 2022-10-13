@@ -16,6 +16,10 @@ jobs:
       TARGET_FILE: thesis.pdf
 
     # steps:
+    # - name: Prepare for build
+    #   run: |
+    #     cd ${{ env.SRC_DIR }}
+    
     #   - name: Set up Git repository
     #     uses: actions/checkout@v2
     #   - name: Compile LaTeX document
@@ -28,9 +32,6 @@ jobs:
     - name: Clone Repo
       uses: actions/checkout@v3
     
-    # - name: Prepare for build
-    #   run: |
-    #     cd ${{ env.SRC_DIR }}
     
     - name: Build LaTeX Document
       uses: lyuwen/build-latex-action@v1.0.1
@@ -41,7 +42,7 @@ jobs:
         # directory: $ {{ env.SRC_DIR }}
         # file: ${{ env.SRC_FILE }}
 
-        options: -shell-escape 
+        options: -shell-escape -f --synctex=1 
     - name: Prepare for publish
       run: |
         mkdir build

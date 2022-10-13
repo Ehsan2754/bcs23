@@ -23,7 +23,7 @@ jobs:
       id: textbuild
       with:
         # Name of the file to build.
-        file: ${{ LATEX_FILE }}
+        file: ${{ env.LATEX_FILE }}
         directory: ${{ env.LATEX_DIR }}
     - name: Prepare for publish
       run: |

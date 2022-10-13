@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-18.04
     env:
       LATEX_DIR: ./publication
-      LATEX_FILE: ./publication/thesis.tex
+      LATEX_FILE: thesis.tex
       BUILD_DIR: build
       
       
@@ -23,8 +23,8 @@ jobs:
       id: textbuild
       with:
         # Name of the file to build.
-        file: ${{ env.LATEX_DIR }}
-        directory: LATEX_FILE
+        file: ${{ LATEX_FILE }}
+        directory: ${{ env.LATEX_DIR }}
     - name: Prepare for publish
       run: |
         mkdir ${{ env.BUILD_DIR }}

@@ -26,6 +26,7 @@ jobs:
       with:
         directory: ./literature
         file: thesis.tex
+        options: -shell-escape -bibtex
         # directory: $ {{ env.SRC_DIR }}
         # file: ${{ env.SRC_FILE }}
     - name: Prepare for publish

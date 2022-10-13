@@ -45,29 +45,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }} 
-          asset_path: thesis.pdf
-          asset_name: ./literature/thesis.pdf
+          asset_path: ./literature/thesis.pdf
+          asset_name: thesis.pdf
           asset_content_type: application/pdf
-#     - name: Clone Repo
-#       uses: actions/checkout@v3
-#     - name: Prepare for build
-#       run: |
-#       sudo apt install biber
-#     - name: Build LaTeX Document
-#       uses: lyuwen/build-latex-action@v1.0.1
-#       id: textbuild
-#       with:
-#         directory: ./literature
-#         file: thesis.tex
-#         options: -shell-escape -bibtex
-#         # directory: $ {{ env.SRC_DIR }}
-#         # file: ${{ env.SRC_FILE }}
-#     - name: Prepare for publish
-#       run: |
-#         mkdir build
-#         cp ${{ steps.texbuild.outputs.output }} ./build/thesis.pdf
-#         cd ./build && bash ../prepare_for_publish.sh,
-#     - uses: actions/upload-artifact@v2
-#       with:
-#         name: ${{ steps.texbuild.outputs.output }}
-#         path: ${{ steps.texbuild.outputs.output }}
+

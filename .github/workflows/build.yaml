@@ -10,7 +10,7 @@ jobs:
     name: build LaTeX
     runs-on: ubuntu-latest
     env:
-      SRC_DIR: ./literature
+      SRC_DIR: ./docs/latex
       SRC_FILE: thesis.tex
       TARGET: thesis.pdf
       VERSION: 0.2

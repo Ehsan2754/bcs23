@@ -1,68 +1,62 @@
 \chapter{Literature Review}
 \label{chap:lr}
-\chaptermark{Second Chapter Heading}
+
+\vspace{4mm}
+% Background: Describe the problem space you are working on, why it is important for the community, and why there is a need for this research.  
+Humanoid bipedal robots are a rapidly growing area of research in the field of robotics. One of the primary challenges in developing these robots is achieving vertical balance, which has been identified as a key challenge in the literature \cite{Savin2017,cwc7139910}. To address this challenge, various approaches have been proposed, including the use of the contact-wrench cone \cite{cwc7139910} and the zero-moment point \cite{zmp1241826}. These approaches are based on the assumption that the contact interaction between the bipedal robot and the supporting surface can be accurately captured \cite{Savin8875522}.
+
+\vspace{4mm}
+% Objective: State your research project objective, research questions, or hypotheses.
+
+Contact interaction with supporting surface can be captured by utilizing various learning methods such as reinforcement learning\cite{rl48550} and dense neural networks\cite{dnn8501736}. Aforementioned models needs data to train. This data can be obtained either through experiments or producing simulation-based data. 
+
+\vspace{4mm}
+
+The advantage to use machine learning for contact interaction with supporting surface capture with supporting surface is exclusion of unknown reaction forces from the dynamics equation of humanoid bipedal robots control system\cite{Savin8875522}. Formally, given the parameters $P$ I should introduce a projector matrix $\mathcal{P}$ into orthonormal basis $\mathcal{T}$ to the bipedal robot control system such:
+% Methods: Introduce the study design and methods you used for this work
+\vspace{4mm}
+
+\begin{equation}
+\label{eq:def} 
+P = \{p_1, p_2, p_3, ...\} ; \forall p_i \in P, p_i \in \mathbb{R}^n
+\\
+\exists \mathcal{T} = \{ \tau_1,\tau_2,\tau_3,...,\tau_m \};  \mathcal{T} \in \mathbb{R}^{n \times m}; n,m \in \mathbb{Z}^{\ge0};\\ \forall \tau_p \tau_q \in \mathcal{T} :
+\\
+\tau_p^T \tau_q = 0 , \hspace{2mm}
+     \tau_p^T \tau_q = 0 , \hspace{2mm}
+     \|\tau_p\|=0 , \hspace{2mm}
+     \|\tau_q\|=0 
+     \\ \mathcal{P} \in \mathbb{R}^{n^2}
+\end{equation}
+
+\vspace{4mm}
+
+ 
+ Learning methods predict components of projector matrix $\mathcal{P}$ to the bipedal robot control system by training to maximize reward function$(\lambda=-1)$\ref{eq:F} for reinforcement learning methods and minimize the loss  function$(\lambda=1)$ \ref{eq:F} for dense neural network methods. The key term which is the gap in current learning methods is predicting the \textbf{components} of contact interaction with supporting surface capture with supporting surface. The components are obtained 
+ by singular-value-decomposition of projector matrix $\mathcal{P}$. My goal is to investigate if the components of the projection matrix $\mathcal{P}$ is predictable using learning methods and compare the accuracy of the prediction comparing to existing learning methods.
+
+\vspace{4mm}
+
+\begin{equation}
+    \label{eq:F}
+    \Psi = \lambda \sum_{p \in P} \| p - \mathcal{P}^* p\| ;
+    \lambda = \begin{cases}
+        1 \text{ Reinforcement learning methods}\\
+        -1 \text{ Dense neural networks}
+    \end{cases}
+    % \caption{\mathcal{\mu}  defining reward/loss function}
+\end{equation}
+
+\vspace{4mm}
+
+% Results: Briefly state what you accomplished or found, especially as it pertains to the objective stated earlier.
+The optimization problem of maximizing the reward function in gradient ascent \cite{gas11046} to train reinforcement learning models\cite{rl48550} or minimizing the loss function in gradient descent \cite{gdc04747} to train dense neural networks\cite{dnn8501736} requires the gradient of singular value decomposition (SVD) of the projector matrix $\mathcal{P}$ with respect to the given set of parameters set $P$\ref{eq:def} to train the contact interaction with supporting surface predictor\cite{gdc04747,gas11046}. One of methods to calculate SVD gradient is automatic-differentiation(AD) process. AD method evaluates gradients of SVD specified throughout the computation process. In low-level, AD propagates gradients of basic operators used in SVD routine with respect to chain rule; this process is called back propagation\cite{grad02659}. 
+
+\vspace{4mm}
+
+In conclusion, Savin clearly highlights the essence of accurate capturing contact interaction with supporting surface of the bipedal robots \cite{Savin8875522} to maintain vertical balance the robot system in existing CWC \cite{cwc7139910} and ZMP \cite{zmp1241826} method. Exploring present literature on existing learning based estimators\cite{dnn8501736,rl48550}, there exists the gap in deploying decomposition methods such as SVD into estimating the components of contact interaction with supporting surface of bipedal robots and investigation of method accuracy measures. Deployment of SVD to learning estimation methods requires calculation of the gradients with respect to parameters $P$\ref{eq:def}\cite{gdc04747,gas11046} which Wan and Zhang \cite{grad02659} have explored the AD method in details for complex valued SVD.   
 
 
-\Blindtext[2]
 
-\section{Another Section}
-\Blindtext[1]
-\newpage
-With the widespread of computing systems, information processing, and net working, the practice of replacing paper documentation to electronic documentation has become more and more common. Electronic documentation within the workplace has several advantages over the traditional one, such as being easy to share, copy and edit the document. However, these advantages also present a problem. A malefactor, having access to the system, can easily copy and leak the document, without leaving any trace. Such actions are virtually undetectable in most systems, so, the malefactor goes unpunished. In this thesis, we propose one solution to the problem: digital watermarking. 
 
-Every electronic document within the protected system is marked with an invisible digital watermark, containing information about the user, accessing this particular document. Therefore, in case the protected company discovers the leaked document, they will be able to identify the machine of the malicious person and time when the document was leaked. This will allow inflicting punishment on the malefactor, recovering the costs of the leak, and potentially preventing future ones. 
-
-\begin{longtable}{c|c}
-\caption[This is the title I want to appear in the List of Tables]{Simulation Parameters} \label{table:secsimulation_params} \\
-\hline
-A & B  \\
-\hline
-\endfirsthead
-\multicolumn{2}{@{}l}{} \\
-\hline
-A & B \\
-\hline
-\endhead
-\hline
- \textbf{Parameter} & \textbf{Value}\\
- \hline
- Number of vehicles & $|\mathcal{V}|$\\
- \hline
- Number of RSUs & $|\mathcal{U}|$\\
- \hline
- RSU coverage radius & 150 m\\
- \hline
- V2V communication radius & 30 m\\
- \hline
- Smart vehicle antenna height & 1.5 m\\
- \hline
- RSU antenna height & 25 m\\
- \hline
- Smart vehicle maximum speed & $v_{max}$ m/s\\
- \hline
- Smart vehicle minimum speed & $v_{min}$ m/s\\
- \hline
- Common smart vehicle cache capacities & $[50, 100, 150, 200, 250]$ mb\\
- \hline
- Common RSU cache capacities & $[5000,1000,1500,2000,2500]$ mb\\
- \hline
- Common backhaul rates & $[75, 100, 150]$ mb/s\\
- \hline
-\end{longtable}
-
-\begin{figure}[hbt]
-\centering
-\includegraphics[]{figs/inno.png}
-\caption{One kernel at $x_s$ (\emph{dotted kernel}) or two kernels at
-$x_i$ and $x_j$ (\textit{left and right}) lead to the same summed estimate
-at $x_s$. This shows a figure consisting of different types of
-lines. Elements of the figure described in the caption should be set in
-italics, in parentheses, as shown in this sample caption.}
-\label{fig:secex}
-\end{figure}
-
-This description implies several essential properties of the task at hand:
-\begin{enumerate}
-    \item Watermark must contain all necessary information, but still, be placeable and recognizable even on smaller images. The produced watermark must be compact but have the possibility to store enough information. 
-    \item To prevent easy tampering, the watermark must be invisible to the naked eye (and, preferably, to basic image parsing tools). If malefactor does not know about the existence of watermark, they might not even try to remove it and disable it. 
-\end{enumerate}
+%%%%%%%

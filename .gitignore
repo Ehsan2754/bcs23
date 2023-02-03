@@ -25,6 +25,7 @@ bin-release/
 *.out
 thesis.*
 !thesis.tex
+*.log
 
 
 
